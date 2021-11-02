@@ -1,20 +1,20 @@
 int sum = 0;
 int i = 0;
-int array[7] = {1,2,3,4,5,6,7};
-double res = 0;
+int array[6] = {1,2,3,4,5,6};
+int res = 0;
 
 
 fun int sumArray(int n){
    while (i <= n)
    {
-      res  = res + array[i];
+      res  = array[i] + res;
       i = i+1;
    }
    return res;
 }
 
 Main{
-   sum = sumArray(6);
-   print("Sum of array elements is:");
+   sum = sumArray(5);
+   print("Sum of array elements is:\n");
    print(sum);
 }

@@ -1,0 +1,19 @@
+int i = 0;
+int res = 0;
+
+fun int fibo(int n, int m){
+   if (n<2){
+       return n;
+   }else{
+       m = fibo(n-1,0);
+       return fibo(n-2,0)+m;
+   }
+}
+
+Main{
+    while(i < 10){
+        res = fibo(i, 0);
+        print(res);
+        i = i+1;
+    }
+}

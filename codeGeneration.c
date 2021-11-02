@@ -81,7 +81,7 @@ void closeFiles()
     fputc(c, output);
   }
 
-  writeOutputFile("\t\tGT(-2); \t\t# Terminamos la ejecución\n");
+  writeOutputFile("\t\tGT(-2); \t\t\n");
   writeOutputFile("END\n");
 
   fclose(mainFile);
@@ -97,10 +97,24 @@ void memoryToRegister(struct reg *r, struct symbol * addr)
 {
   if (addr->fun == NULL)
   { 
-    writeInTmpFile("\t\t%s%d = I(R6-%d);\n", r->type, r->index , addr->varIndex*4);
+    if (strcmp(r->type, "R")==0)
+    {
+      writeInTmpFile("\t\t%s%d = I(R6-%d);\n", r->type, r->index , addr->varIndex*4);
+    }else{
+      writeInTmpFile("\t\t%s%d = F(R6-%d);\n", r->type, r->index , addr->varIndex*4);
+    }
   }else{
-    writeInTmpFile("\t\t%s%d = I(R5-%d);\n", r->type, r->index , addr->varIndex*4);
+    if (strcmp(r->type, "R")==0)
+    {
+      writeInTmpFile("\t\t%s%d = I(R5-%d);\n", r->type, r->index , addr->varIndex*4);
+    }else{
+      writeInTmpFile("\t\t%s%d = F(R5-%d);\n", r->type, r->index , addr->varIndex*4);
+    }
   }
+}
+
+void returnValueToRegister(struct reg *r){
+  writeInTmpFile("\t\t%s%d = I(R5+8);\n", r->type, r->index);
 }
 
 void arrayAccess(struct reg *r, struct symbol * addr, struct reg * offset)
@@ -134,7 +148,7 @@ void registerToMemory(char sign, int regIndex, int offset, struct reg *src)
   {
     writeInTmpFile("\t\tI(R%d%c%d) = %s%d;\n", regIndex, sign, offset*4, src->type, src->index);
   }else{
-    writeInTmpFile("\t\tP(R%d%c%d) = %s%d;\n", regIndex, sign, offset*4, src->type, src->index);
+    writeInTmpFile("\t\tF(R%d%c%d) = %s%d;\n", regIndex, sign, offset*4, src->type, src->index);
   }
 }
 
@@ -192,17 +206,24 @@ void numericLogicalCalculation(char* operation, struct reg *l, struct reg *r)
 }
 
 void insertContext(int label){
-  writeInTmpFile("\t\tR7 = R7-8;\n");
+  writeInTmpFile("\t\tR7 = R7-12;\n");
   writeInTmpFile("\t\tI(R7) = R5;\n");
-  writeInTmpFile("\t\tR5 = R7;\n");
+  writeInTmpFile("\t\tR4 = R7;\n");
   writeInTmpFile("\t\tI(R7+4) = %d;\n", label);
 }
 
 void extractContext(){
   writeInTmpFile("\t\tR7=R5;\n");
   writeInTmpFile("\t\tR5 = I(R5);\n");
-  writeInTmpFile("\t\tR0 = I(R7+4);\n");
+}
+
+void goOutFunction(){
+  writeInTmpFile("\t\tR0 = I(R5+4);\n");
   writeInTmpFile("\t\tGT(R0);\n");
+}
+
+void goInFunction(){
+  writeInTmpFile("\t\tR5 = R4;\n");
 }
 
 void insertIf(struct reg *r, int label)

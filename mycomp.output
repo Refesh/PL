@@ -1,0 +1,2078 @@
+Estado 72 conflictos: 4 desplazamiento(s)/reducción(ones)
+
+
+Gramática
+
+    0 $accept: program $end
+
+    1 $@1: /* vacío */
+
+    2 $@2: /* vacío */
+
+    3 $@3: /* vacío */
+
+    4 program: declarationListContainer $@1 functionListContainer $@2 MainProgram $@3
+
+    5 $@4: /* vacío */
+
+    6 $@5: /* vacío */
+
+    7 $@6: /* vacío */
+
+    8 MainProgram: MAIN $@4 '{' $@5 statementBlockContainer '}' $@6
+
+    9 statementBlockContainer: statementBlock
+
+   10 statementBlock: statement
+   11               | statement statementBlock
+
+   12 statement: IF '(' compare ')' '{' statementBlockContainer '}'
+   13          | IF '(' compare ')' '{' statementBlockContainer '}' ELSE '{' statementBlockContainer '}'
+
+   14 $@7: /* vacío */
+
+   15 $@8: /* vacío */
+
+   16 $@9: /* vacío */
+
+   17 statement: WHILE '(' $@7 compare ')' '{' $@8 statementBlockContainer '}' $@9
+   18          | exp ';'
+   19          | returnExp ';'
+
+   20 $@10: /* vacío */
+
+   21 $@11: /* vacío */
+
+   22 $@12: /* vacío */
+
+   23 function: FUNCT TYPE ID '(' $@10 paramListContainer ')' '{' $@11 statementBlockContainer '}' $@12
+
+   24 $@13: /* vacío */
+
+   25 $@14: /* vacío */
+
+   26 $@15: /* vacío */
+
+   27 function: FUNCT TYPE '[' ']' ID '(' $@13 paramListContainer ')' '{' $@14 statementBlockContainer '}' $@15
+
+   28 functionListContainer: functionList
+
+   29 functionList: /* vacío */
+   30             | function functionList
+
+   31 $@16: /* vacío */
+
+   32 exp: '(' $@16 exp ')'
+
+   33 $@17: /* vacío */
+
+   34 exp: exp '+' $@17 exp
+
+   35 $@18: /* vacío */
+
+   36 exp: exp '-' $@18 exp
+
+   37 $@19: /* vacío */
+
+   38 exp: exp '*' $@19 exp
+
+   39 $@20: /* vacío */
+
+   40 exp: exp '/' $@20 exp
+
+   41 $@21: /* vacío */
+
+   42 exp: '-' $@21 exp
+   43    | num
+
+   44 $@22: /* vacío */
+
+   45 exp: ID $@22
+
+   46 $@23: /* vacío */
+
+   47 exp: ID '[' exp ']' $@23
+
+   48 $@24: /* vacío */
+
+   49 $@25: /* vacío */
+
+   50 exp: PRINT '(' $@24 exp ')' $@25
+   51    | assign
+
+   52 $@26: /* vacío */
+
+   53 exp: STRINGLITERAL $@26
+   54    | ID '(' expList ')'
+
+   55 $@27: /* vacío */
+
+   56 returnExp: RETURN $@27 exp
+
+   57 $@28: /* vacío */
+
+   58 returnExp: RETURN $@28
+
+   59 $@29: /* vacío */
+
+   60 compare: exp COMP $@29 exp
+
+   61 $@30: /* vacío */
+
+   62 assign: ID '[' exp ']' '=' $@30 exp
+
+   63 $@31: /* vacío */
+
+   64 $@32: /* vacío */
+
+   65 assign: ID '=' $@31 exp $@32
+
+   66 numListContainer: numList
+
+   67 $@33: /* vacío */
+
+   68 numList: num $@33
+
+   69 $@34: /* vacío */
+
+   70 numList: num ',' $@34 numList
+
+   71 $@35: /* vacío */
+
+   72 num: ENTERO $@35
+
+   73 $@36: /* vacío */
+
+   74 num: REAL $@36
+
+   75 paramListContainer: paramList
+
+   76 paramList: /* vacío */
+   77          | TYPE ID
+   78          | TYPE ID ',' paramList
+
+   79 expList: /* vacío */
+   80        | exp ',' expList
+   81        | exp
+
+   82 $@37: /* vacío */
+
+   83 $@38: /* vacío */
+
+   84 $@39: /* vacío */
+
+   85 $@40: /* vacío */
+
+   86 declaration: TYPE ID '[' $@37 ENTERO ']' '=' $@38 '{' $@39 numListContainer '}' $@40
+
+   87 $@41: /* vacío */
+
+   88 declaration: TYPE ID '=' $@41 exp
+
+   89 declarationListContainer: declarationList
+
+   90 declarationList: /* vacío */
+
+   91 $@42: /* vacío */
+
+   92 declarationList: declaration ';' $@42 declarationList
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+'(' (40) 12 13 17 23 27 32 50 54
+')' (41) 12 13 17 23 27 32 50 54
+'*' (42) 38
+'+' (43) 34
+',' (44) 70 78 80
+'-' (45) 36 42
+'/' (47) 40
+';' (59) 18 19 92
+'=' (61) 62 65 86 88
+'[' (91) 27 47 62 86
+']' (93) 27 47 62 86
+'{' (123) 8 12 13 17 23 27 86
+'}' (125) 8 12 13 17 23 27 86
+error (256)
+TYPE (258) 23 27 77 78 86 88
+COMP (259) 60
+ID (260) 23 27 45 47 54 62 65 77 78 86 88
+ENTERO (261) 72 86
+REAL (262) 74
+STRINGLITERAL (263) 53
+WHILE (264) 17
+IF (265) 12 13
+ELSE (266) 13
+FUNCT (267) 23 27
+MAIN (268) 8
+RETURN (269) 56 58
+PRINT (270) 50
+UMINUS (271)
+
+
+No terminales con las reglas donde aparecen
+
+$accept (30)
+    en la izquierda: 0
+program (31)
+    en la izquierda: 4, en la derecha: 0
+$@1 (32)
+    en la izquierda: 1, en la derecha: 4
+$@2 (33)
+    en la izquierda: 2, en la derecha: 4
+$@3 (34)
+    en la izquierda: 3, en la derecha: 4
+MainProgram (35)
+    en la izquierda: 8, en la derecha: 4
+$@4 (36)
+    en la izquierda: 5, en la derecha: 8
+$@5 (37)
+    en la izquierda: 6, en la derecha: 8
+$@6 (38)
+    en la izquierda: 7, en la derecha: 8
+statementBlockContainer (39)
+    en la izquierda: 9, en la derecha: 8 12 13 17 23 27
+statementBlock (40)
+    en la izquierda: 10 11, en la derecha: 9 11
+statement (41)
+    en la izquierda: 12 13 17 18 19, en la derecha: 10 11
+$@7 (42)
+    en la izquierda: 14, en la derecha: 17
+$@8 (43)
+    en la izquierda: 15, en la derecha: 17
+$@9 (44)
+    en la izquierda: 16, en la derecha: 17
+function (45)
+    en la izquierda: 23 27, en la derecha: 30
+$@10 (46)
+    en la izquierda: 20, en la derecha: 23
+$@11 (47)
+    en la izquierda: 21, en la derecha: 23
+$@12 (48)
+    en la izquierda: 22, en la derecha: 23
+$@13 (49)
+    en la izquierda: 24, en la derecha: 27
+$@14 (50)
+    en la izquierda: 25, en la derecha: 27
+$@15 (51)
+    en la izquierda: 26, en la derecha: 27
+functionListContainer (52)
+    en la izquierda: 28, en la derecha: 4
+functionList (53)
+    en la izquierda: 29 30, en la derecha: 28 30
+exp (54)
+    en la izquierda: 32 34 36 38 40 42 43 45 47 50 51 53 54, en la derecha:
+    18 32 34 36 38 40 42 47 50 56 60 62 65 80 81 88
+$@16 (55)
+    en la izquierda: 31, en la derecha: 32
+$@17 (56)
+    en la izquierda: 33, en la derecha: 34
+$@18 (57)
+    en la izquierda: 35, en la derecha: 36
+$@19 (58)
+    en la izquierda: 37, en la derecha: 38
+$@20 (59)
+    en la izquierda: 39, en la derecha: 40
+$@21 (60)
+    en la izquierda: 41, en la derecha: 42
+$@22 (61)
+    en la izquierda: 44, en la derecha: 45
+$@23 (62)
+    en la izquierda: 46, en la derecha: 47
+$@24 (63)
+    en la izquierda: 48, en la derecha: 50
+$@25 (64)
+    en la izquierda: 49, en la derecha: 50
+$@26 (65)
+    en la izquierda: 52, en la derecha: 53
+returnExp (66)
+    en la izquierda: 56 58, en la derecha: 19
+$@27 (67)
+    en la izquierda: 55, en la derecha: 56
+$@28 (68)
+    en la izquierda: 57, en la derecha: 58
+compare (69)
+    en la izquierda: 60, en la derecha: 12 13 17
+$@29 (70)
+    en la izquierda: 59, en la derecha: 60
+assign (71)
+    en la izquierda: 62 65, en la derecha: 51
+$@30 (72)
+    en la izquierda: 61, en la derecha: 62
+$@31 (73)
+    en la izquierda: 63, en la derecha: 65
+$@32 (74)
+    en la izquierda: 64, en la derecha: 65
+numListContainer (75)
+    en la izquierda: 66, en la derecha: 86
+numList (76)
+    en la izquierda: 68 70, en la derecha: 66 70
+$@33 (77)
+    en la izquierda: 67, en la derecha: 68
+$@34 (78)
+    en la izquierda: 69, en la derecha: 70
+num (79)
+    en la izquierda: 72 74, en la derecha: 43 68 70
+$@35 (80)
+    en la izquierda: 71, en la derecha: 72
+$@36 (81)
+    en la izquierda: 73, en la derecha: 74
+paramListContainer (82)
+    en la izquierda: 75, en la derecha: 23 27
+paramList (83)
+    en la izquierda: 76 77 78, en la derecha: 75 78
+expList (84)
+    en la izquierda: 79 80 81, en la derecha: 54 80
+declaration (85)
+    en la izquierda: 86 88, en la derecha: 92
+$@37 (86)
+    en la izquierda: 82, en la derecha: 86
+$@38 (87)
+    en la izquierda: 83, en la derecha: 86
+$@39 (88)
+    en la izquierda: 84, en la derecha: 86
+$@40 (89)
+    en la izquierda: 85, en la derecha: 86
+$@41 (90)
+    en la izquierda: 87, en la derecha: 88
+declarationListContainer (91)
+    en la izquierda: 89, en la derecha: 4
+declarationList (92)
+    en la izquierda: 90 92, en la derecha: 89 92
+$@42 (93)
+    en la izquierda: 91, en la derecha: 92
+
+
+estado 0
+
+    0 $accept: . program $end
+
+    TYPE  desplazar e ir al estado 1
+
+    $default  reduce usando la regla 90 (declarationList)
+
+    program                   ir al estado 2
+    declaration               ir al estado 3
+    declarationListContainer  ir al estado 4
+    declarationList           ir al estado 5
+
+
+estado 1
+
+   86 declaration: TYPE . ID '[' $@37 ENTERO ']' '=' $@38 '{' $@39 numListContainer '}' $@40
+   88            | TYPE . ID '=' $@41 exp
+
+    ID  desplazar e ir al estado 6
+
+
+estado 2
+
+    0 $accept: program . $end
+
+    $end  desplazar e ir al estado 7
+
+
+estado 3
+
+   92 declarationList: declaration . ';' $@42 declarationList
+
+    ';'  desplazar e ir al estado 8
+
+
+estado 4
+
+    4 program: declarationListContainer . $@1 functionListContainer $@2 MainProgram $@3
+
+    $default  reduce usando la regla 1 ($@1)
+
+    $@1  ir al estado 9
+
+
+estado 5
+
+   89 declarationListContainer: declarationList .
+
+    $default  reduce usando la regla 89 (declarationListContainer)
+
+
+estado 6
+
+   86 declaration: TYPE ID . '[' $@37 ENTERO ']' '=' $@38 '{' $@39 numListContainer '}' $@40
+   88            | TYPE ID . '=' $@41 exp
+
+    '='  desplazar e ir al estado 10
+    '['  desplazar e ir al estado 11
+
+
+estado 7
+
+    0 $accept: program $end .
+
+    $default  aceptar
+
+
+estado 8
+
+   92 declarationList: declaration ';' . $@42 declarationList
+
+    $default  reduce usando la regla 91 ($@42)
+
+    $@42  ir al estado 12
+
+
+estado 9
+
+    4 program: declarationListContainer $@1 . functionListContainer $@2 MainProgram $@3
+
+    FUNCT  desplazar e ir al estado 13
+
+    $default  reduce usando la regla 29 (functionList)
+
+    function               ir al estado 14
+    functionListContainer  ir al estado 15
+    functionList           ir al estado 16
+
+
+estado 10
+
+   88 declaration: TYPE ID '=' . $@41 exp
+
+    $default  reduce usando la regla 87 ($@41)
+
+    $@41  ir al estado 17
+
+
+estado 11
+
+   86 declaration: TYPE ID '[' . $@37 ENTERO ']' '=' $@38 '{' $@39 numListContainer '}' $@40
+
+    $default  reduce usando la regla 82 ($@37)
+
+    $@37  ir al estado 18
+
+
+estado 12
+
+   92 declarationList: declaration ';' $@42 . declarationList
+
+    TYPE  desplazar e ir al estado 1
+
+    $default  reduce usando la regla 90 (declarationList)
+
+    declaration      ir al estado 3
+    declarationList  ir al estado 19
+
+
+estado 13
+
+   23 function: FUNCT . TYPE ID '(' $@10 paramListContainer ')' '{' $@11 statementBlockContainer '}' $@12
+   27         | FUNCT . TYPE '[' ']' ID '(' $@13 paramListContainer ')' '{' $@14 statementBlockContainer '}' $@15
+
+    TYPE  desplazar e ir al estado 20
+
+
+estado 14
+
+   30 functionList: function . functionList
+
+    FUNCT  desplazar e ir al estado 13
+
+    $default  reduce usando la regla 29 (functionList)
+
+    function      ir al estado 14
+    functionList  ir al estado 21
+
+
+estado 15
+
+    4 program: declarationListContainer $@1 functionListContainer . $@2 MainProgram $@3
+
+    $default  reduce usando la regla 2 ($@2)
+
+    $@2  ir al estado 22
+
+
+estado 16
+
+   28 functionListContainer: functionList .
+
+    $default  reduce usando la regla 28 (functionListContainer)
+
+
+estado 17
+
+   88 declaration: TYPE ID '=' $@41 . exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 30
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 18
+
+   86 declaration: TYPE ID '[' $@37 . ENTERO ']' '=' $@38 '{' $@39 numListContainer '}' $@40
+
+    ENTERO  desplazar e ir al estado 33
+
+
+estado 19
+
+   92 declarationList: declaration ';' $@42 declarationList .
+
+    $default  reduce usando la regla 92 (declarationList)
+
+
+estado 20
+
+   23 function: FUNCT TYPE . ID '(' $@10 paramListContainer ')' '{' $@11 statementBlockContainer '}' $@12
+   27         | FUNCT TYPE . '[' ']' ID '(' $@13 paramListContainer ')' '{' $@14 statementBlockContainer '}' $@15
+
+    ID   desplazar e ir al estado 34
+    '['  desplazar e ir al estado 35
+
+
+estado 21
+
+   30 functionList: function functionList .
+
+    $default  reduce usando la regla 30 (functionList)
+
+
+estado 22
+
+    4 program: declarationListContainer $@1 functionListContainer $@2 . MainProgram $@3
+
+    MAIN  desplazar e ir al estado 36
+
+    MainProgram  ir al estado 37
+
+
+estado 23
+
+   45 exp: ID . $@22
+   47    | ID . '[' exp ']' $@23
+   54    | ID . '(' expList ')'
+   62 assign: ID . '[' exp ']' '=' $@30 exp
+   65       | ID . '=' $@31 exp $@32
+
+    '='  desplazar e ir al estado 38
+    '('  desplazar e ir al estado 39
+    '['  desplazar e ir al estado 40
+
+    $default  reduce usando la regla 44 ($@22)
+
+    $@22  ir al estado 41
+
+
+estado 24
+
+   72 num: ENTERO . $@35
+
+    $default  reduce usando la regla 71 ($@35)
+
+    $@35  ir al estado 42
+
+
+estado 25
+
+   74 num: REAL . $@36
+
+    $default  reduce usando la regla 73 ($@36)
+
+    $@36  ir al estado 43
+
+
+estado 26
+
+   53 exp: STRINGLITERAL . $@26
+
+    $default  reduce usando la regla 52 ($@26)
+
+    $@26  ir al estado 44
+
+
+estado 27
+
+   50 exp: PRINT . '(' $@24 exp ')' $@25
+
+    '('  desplazar e ir al estado 45
+
+
+estado 28
+
+   42 exp: '-' . $@21 exp
+
+    $default  reduce usando la regla 41 ($@21)
+
+    $@21  ir al estado 46
+
+
+estado 29
+
+   32 exp: '(' . $@16 exp ')'
+
+    $default  reduce usando la regla 31 ($@16)
+
+    $@16  ir al estado 47
+
+
+estado 30
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   88 declaration: TYPE ID '=' $@41 exp .
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    $default  reduce usando la regla 88 (declaration)
+
+
+estado 31
+
+   51 exp: assign .
+
+    $default  reduce usando la regla 51 (exp)
+
+
+estado 32
+
+   43 exp: num .
+
+    $default  reduce usando la regla 43 (exp)
+
+
+estado 33
+
+   86 declaration: TYPE ID '[' $@37 ENTERO . ']' '=' $@38 '{' $@39 numListContainer '}' $@40
+
+    ']'  desplazar e ir al estado 52
+
+
+estado 34
+
+   23 function: FUNCT TYPE ID . '(' $@10 paramListContainer ')' '{' $@11 statementBlockContainer '}' $@12
+
+    '('  desplazar e ir al estado 53
+
+
+estado 35
+
+   27 function: FUNCT TYPE '[' . ']' ID '(' $@13 paramListContainer ')' '{' $@14 statementBlockContainer '}' $@15
+
+    ']'  desplazar e ir al estado 54
+
+
+estado 36
+
+    8 MainProgram: MAIN . $@4 '{' $@5 statementBlockContainer '}' $@6
+
+    $default  reduce usando la regla 5 ($@4)
+
+    $@4  ir al estado 55
+
+
+estado 37
+
+    4 program: declarationListContainer $@1 functionListContainer $@2 MainProgram . $@3
+
+    $default  reduce usando la regla 3 ($@3)
+
+    $@3  ir al estado 56
+
+
+estado 38
+
+   65 assign: ID '=' . $@31 exp $@32
+
+    $default  reduce usando la regla 63 ($@31)
+
+    $@31  ir al estado 57
+
+
+estado 39
+
+   54 exp: ID '(' . expList ')'
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    $default  reduce usando la regla 79 (expList)
+
+    exp      ir al estado 58
+    assign   ir al estado 31
+    num      ir al estado 32
+    expList  ir al estado 59
+
+
+estado 40
+
+   47 exp: ID '[' . exp ']' $@23
+   62 assign: ID '[' . exp ']' '=' $@30 exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 60
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 41
+
+   45 exp: ID $@22 .
+
+    $default  reduce usando la regla 45 (exp)
+
+
+estado 42
+
+   72 num: ENTERO $@35 .
+
+    $default  reduce usando la regla 72 (num)
+
+
+estado 43
+
+   74 num: REAL $@36 .
+
+    $default  reduce usando la regla 74 (num)
+
+
+estado 44
+
+   53 exp: STRINGLITERAL $@26 .
+
+    $default  reduce usando la regla 53 (exp)
+
+
+estado 45
+
+   50 exp: PRINT '(' . $@24 exp ')' $@25
+
+    $default  reduce usando la regla 48 ($@24)
+
+    $@24  ir al estado 61
+
+
+estado 46
+
+   42 exp: '-' $@21 . exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 62
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 47
+
+   32 exp: '(' $@16 . exp ')'
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 63
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 48
+
+   34 exp: exp '+' . $@17 exp
+
+    $default  reduce usando la regla 33 ($@17)
+
+    $@17  ir al estado 64
+
+
+estado 49
+
+   36 exp: exp '-' . $@18 exp
+
+    $default  reduce usando la regla 35 ($@18)
+
+    $@18  ir al estado 65
+
+
+estado 50
+
+   38 exp: exp '*' . $@19 exp
+
+    $default  reduce usando la regla 37 ($@19)
+
+    $@19  ir al estado 66
+
+
+estado 51
+
+   40 exp: exp '/' . $@20 exp
+
+    $default  reduce usando la regla 39 ($@20)
+
+    $@20  ir al estado 67
+
+
+estado 52
+
+   86 declaration: TYPE ID '[' $@37 ENTERO ']' . '=' $@38 '{' $@39 numListContainer '}' $@40
+
+    '='  desplazar e ir al estado 68
+
+
+estado 53
+
+   23 function: FUNCT TYPE ID '(' . $@10 paramListContainer ')' '{' $@11 statementBlockContainer '}' $@12
+
+    $default  reduce usando la regla 20 ($@10)
+
+    $@10  ir al estado 69
+
+
+estado 54
+
+   27 function: FUNCT TYPE '[' ']' . ID '(' $@13 paramListContainer ')' '{' $@14 statementBlockContainer '}' $@15
+
+    ID  desplazar e ir al estado 70
+
+
+estado 55
+
+    8 MainProgram: MAIN $@4 . '{' $@5 statementBlockContainer '}' $@6
+
+    '{'  desplazar e ir al estado 71
+
+
+estado 56
+
+    4 program: declarationListContainer $@1 functionListContainer $@2 MainProgram $@3 .
+
+    $default  reduce usando la regla 4 (program)
+
+
+estado 57
+
+   65 assign: ID '=' $@31 . exp $@32
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 72
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 58
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   80 expList: exp . ',' expList
+   81        | exp .
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+    ','  desplazar e ir al estado 73
+
+    $default  reduce usando la regla 81 (expList)
+
+
+estado 59
+
+   54 exp: ID '(' expList . ')'
+
+    ')'  desplazar e ir al estado 74
+
+
+estado 60
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   47    | ID '[' exp . ']' $@23
+   62 assign: ID '[' exp . ']' '=' $@30 exp
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+    ']'  desplazar e ir al estado 75
+
+
+estado 61
+
+   50 exp: PRINT '(' $@24 . exp ')' $@25
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 76
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 62
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   42    | '-' $@21 exp .
+
+    $default  reduce usando la regla 42 (exp)
+
+
+estado 63
+
+   32 exp: '(' $@16 exp . ')'
+   34    | exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+    ')'  desplazar e ir al estado 77
+
+
+estado 64
+
+   34 exp: exp '+' $@17 . exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 78
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 65
+
+   36 exp: exp '-' $@18 . exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 79
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 66
+
+   38 exp: exp '*' $@19 . exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 80
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 67
+
+   40 exp: exp '/' $@20 . exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 81
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 68
+
+   86 declaration: TYPE ID '[' $@37 ENTERO ']' '=' . $@38 '{' $@39 numListContainer '}' $@40
+
+    $default  reduce usando la regla 83 ($@38)
+
+    $@38  ir al estado 82
+
+
+estado 69
+
+   23 function: FUNCT TYPE ID '(' $@10 . paramListContainer ')' '{' $@11 statementBlockContainer '}' $@12
+
+    TYPE  desplazar e ir al estado 83
+
+    $default  reduce usando la regla 76 (paramList)
+
+    paramListContainer  ir al estado 84
+    paramList           ir al estado 85
+
+
+estado 70
+
+   27 function: FUNCT TYPE '[' ']' ID . '(' $@13 paramListContainer ')' '{' $@14 statementBlockContainer '}' $@15
+
+    '('  desplazar e ir al estado 86
+
+
+estado 71
+
+    8 MainProgram: MAIN $@4 '{' . $@5 statementBlockContainer '}' $@6
+
+    $default  reduce usando la regla 6 ($@5)
+
+    $@5  ir al estado 87
+
+
+estado 72
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   65 assign: ID '=' $@31 exp . $@32
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    '+'       [reduce usando la regla 64 ($@32)]
+    '-'       [reduce usando la regla 64 ($@32)]
+    '*'       [reduce usando la regla 64 ($@32)]
+    '/'       [reduce usando la regla 64 ($@32)]
+    $default  reduce usando la regla 64 ($@32)
+
+    $@32  ir al estado 88
+
+
+estado 73
+
+   80 expList: exp ',' . expList
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    $default  reduce usando la regla 79 (expList)
+
+    exp      ir al estado 58
+    assign   ir al estado 31
+    num      ir al estado 32
+    expList  ir al estado 89
+
+
+estado 74
+
+   54 exp: ID '(' expList ')' .
+
+    $default  reduce usando la regla 54 (exp)
+
+
+estado 75
+
+   47 exp: ID '[' exp ']' . $@23
+   62 assign: ID '[' exp ']' . '=' $@30 exp
+
+    '='  desplazar e ir al estado 90
+
+    $default  reduce usando la regla 46 ($@23)
+
+    $@23  ir al estado 91
+
+
+estado 76
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   50    | PRINT '(' $@24 exp . ')' $@25
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+    ')'  desplazar e ir al estado 92
+
+
+estado 77
+
+   32 exp: '(' $@16 exp ')' .
+
+    $default  reduce usando la regla 32 (exp)
+
+
+estado 78
+
+   34 exp: exp . '+' $@17 exp
+   34    | exp '+' $@17 exp .
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    $default  reduce usando la regla 34 (exp)
+
+
+estado 79
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   36    | exp '-' $@18 exp .
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    $default  reduce usando la regla 36 (exp)
+
+
+estado 80
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   38    | exp '*' $@19 exp .
+   40    | exp . '/' $@20 exp
+
+    $default  reduce usando la regla 38 (exp)
+
+
+estado 81
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   40    | exp '/' $@20 exp .
+
+    $default  reduce usando la regla 40 (exp)
+
+
+estado 82
+
+   86 declaration: TYPE ID '[' $@37 ENTERO ']' '=' $@38 . '{' $@39 numListContainer '}' $@40
+
+    '{'  desplazar e ir al estado 93
+
+
+estado 83
+
+   77 paramList: TYPE . ID
+   78          | TYPE . ID ',' paramList
+
+    ID  desplazar e ir al estado 94
+
+
+estado 84
+
+   23 function: FUNCT TYPE ID '(' $@10 paramListContainer . ')' '{' $@11 statementBlockContainer '}' $@12
+
+    ')'  desplazar e ir al estado 95
+
+
+estado 85
+
+   75 paramListContainer: paramList .
+
+    $default  reduce usando la regla 75 (paramListContainer)
+
+
+estado 86
+
+   27 function: FUNCT TYPE '[' ']' ID '(' . $@13 paramListContainer ')' '{' $@14 statementBlockContainer '}' $@15
+
+    $default  reduce usando la regla 24 ($@13)
+
+    $@13  ir al estado 96
+
+
+estado 87
+
+    8 MainProgram: MAIN $@4 '{' $@5 . statementBlockContainer '}' $@6
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    WHILE          desplazar e ir al estado 97
+    IF             desplazar e ir al estado 98
+    RETURN         desplazar e ir al estado 99
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    statementBlockContainer  ir al estado 100
+    statementBlock           ir al estado 101
+    statement                ir al estado 102
+    exp                      ir al estado 103
+    returnExp                ir al estado 104
+    assign                   ir al estado 31
+    num                      ir al estado 32
+
+
+estado 88
+
+   65 assign: ID '=' $@31 exp $@32 .
+
+    $default  reduce usando la regla 65 (assign)
+
+
+estado 89
+
+   80 expList: exp ',' expList .
+
+    $default  reduce usando la regla 80 (expList)
+
+
+estado 90
+
+   62 assign: ID '[' exp ']' '=' . $@30 exp
+
+    $default  reduce usando la regla 61 ($@30)
+
+    $@30  ir al estado 105
+
+
+estado 91
+
+   47 exp: ID '[' exp ']' $@23 .
+
+    $default  reduce usando la regla 47 (exp)
+
+
+estado 92
+
+   50 exp: PRINT '(' $@24 exp ')' . $@25
+
+    $default  reduce usando la regla 49 ($@25)
+
+    $@25  ir al estado 106
+
+
+estado 93
+
+   86 declaration: TYPE ID '[' $@37 ENTERO ']' '=' $@38 '{' . $@39 numListContainer '}' $@40
+
+    $default  reduce usando la regla 84 ($@39)
+
+    $@39  ir al estado 107
+
+
+estado 94
+
+   77 paramList: TYPE ID .
+   78          | TYPE ID . ',' paramList
+
+    ','  desplazar e ir al estado 108
+
+    $default  reduce usando la regla 77 (paramList)
+
+
+estado 95
+
+   23 function: FUNCT TYPE ID '(' $@10 paramListContainer ')' . '{' $@11 statementBlockContainer '}' $@12
+
+    '{'  desplazar e ir al estado 109
+
+
+estado 96
+
+   27 function: FUNCT TYPE '[' ']' ID '(' $@13 . paramListContainer ')' '{' $@14 statementBlockContainer '}' $@15
+
+    TYPE  desplazar e ir al estado 83
+
+    $default  reduce usando la regla 76 (paramList)
+
+    paramListContainer  ir al estado 110
+    paramList           ir al estado 85
+
+
+estado 97
+
+   17 statement: WHILE . '(' $@7 compare ')' '{' $@8 statementBlockContainer '}' $@9
+
+    '('  desplazar e ir al estado 111
+
+
+estado 98
+
+   12 statement: IF . '(' compare ')' '{' statementBlockContainer '}'
+   13          | IF . '(' compare ')' '{' statementBlockContainer '}' ELSE '{' statementBlockContainer '}'
+
+    '('  desplazar e ir al estado 112
+
+
+estado 99
+
+   56 returnExp: RETURN . $@27 exp
+   58          | RETURN . $@28
+
+    ';'       reduce usando la regla 57 ($@28)
+    $default  reduce usando la regla 55 ($@27)
+
+    $@27  ir al estado 113
+    $@28  ir al estado 114
+
+
+estado 100
+
+    8 MainProgram: MAIN $@4 '{' $@5 statementBlockContainer . '}' $@6
+
+    '}'  desplazar e ir al estado 115
+
+
+estado 101
+
+    9 statementBlockContainer: statementBlock .
+
+    $default  reduce usando la regla 9 (statementBlockContainer)
+
+
+estado 102
+
+   10 statementBlock: statement .
+   11               | statement . statementBlock
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    WHILE          desplazar e ir al estado 97
+    IF             desplazar e ir al estado 98
+    RETURN         desplazar e ir al estado 99
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    $default  reduce usando la regla 10 (statementBlock)
+
+    statementBlock  ir al estado 116
+    statement       ir al estado 102
+    exp             ir al estado 103
+    returnExp       ir al estado 104
+    assign          ir al estado 31
+    num             ir al estado 32
+
+
+estado 103
+
+   18 statement: exp . ';'
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+    ';'  desplazar e ir al estado 117
+
+
+estado 104
+
+   19 statement: returnExp . ';'
+
+    ';'  desplazar e ir al estado 118
+
+
+estado 105
+
+   62 assign: ID '[' exp ']' '=' $@30 . exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 119
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 106
+
+   50 exp: PRINT '(' $@24 exp ')' $@25 .
+
+    $default  reduce usando la regla 50 (exp)
+
+
+estado 107
+
+   86 declaration: TYPE ID '[' $@37 ENTERO ']' '=' $@38 '{' $@39 . numListContainer '}' $@40
+
+    ENTERO  desplazar e ir al estado 24
+    REAL    desplazar e ir al estado 25
+
+    numListContainer  ir al estado 120
+    numList           ir al estado 121
+    num               ir al estado 122
+
+
+estado 108
+
+   78 paramList: TYPE ID ',' . paramList
+
+    TYPE  desplazar e ir al estado 83
+
+    $default  reduce usando la regla 76 (paramList)
+
+    paramList  ir al estado 123
+
+
+estado 109
+
+   23 function: FUNCT TYPE ID '(' $@10 paramListContainer ')' '{' . $@11 statementBlockContainer '}' $@12
+
+    $default  reduce usando la regla 21 ($@11)
+
+    $@11  ir al estado 124
+
+
+estado 110
+
+   27 function: FUNCT TYPE '[' ']' ID '(' $@13 paramListContainer . ')' '{' $@14 statementBlockContainer '}' $@15
+
+    ')'  desplazar e ir al estado 125
+
+
+estado 111
+
+   17 statement: WHILE '(' . $@7 compare ')' '{' $@8 statementBlockContainer '}' $@9
+
+    $default  reduce usando la regla 14 ($@7)
+
+    $@7  ir al estado 126
+
+
+estado 112
+
+   12 statement: IF '(' . compare ')' '{' statementBlockContainer '}'
+   13          | IF '(' . compare ')' '{' statementBlockContainer '}' ELSE '{' statementBlockContainer '}'
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp      ir al estado 127
+    compare  ir al estado 128
+    assign   ir al estado 31
+    num      ir al estado 32
+
+
+estado 113
+
+   56 returnExp: RETURN $@27 . exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 129
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 114
+
+   58 returnExp: RETURN $@28 .
+
+    $default  reduce usando la regla 58 (returnExp)
+
+
+estado 115
+
+    8 MainProgram: MAIN $@4 '{' $@5 statementBlockContainer '}' . $@6
+
+    $default  reduce usando la regla 7 ($@6)
+
+    $@6  ir al estado 130
+
+
+estado 116
+
+   11 statementBlock: statement statementBlock .
+
+    $default  reduce usando la regla 11 (statementBlock)
+
+
+estado 117
+
+   18 statement: exp ';' .
+
+    $default  reduce usando la regla 18 (statement)
+
+
+estado 118
+
+   19 statement: returnExp ';' .
+
+    $default  reduce usando la regla 19 (statement)
+
+
+estado 119
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   62 assign: ID '[' exp ']' '=' $@30 exp .
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    $default  reduce usando la regla 62 (assign)
+
+
+estado 120
+
+   86 declaration: TYPE ID '[' $@37 ENTERO ']' '=' $@38 '{' $@39 numListContainer . '}' $@40
+
+    '}'  desplazar e ir al estado 131
+
+
+estado 121
+
+   66 numListContainer: numList .
+
+    $default  reduce usando la regla 66 (numListContainer)
+
+
+estado 122
+
+   68 numList: num . $@33
+   70        | num . ',' $@34 numList
+
+    ','  desplazar e ir al estado 132
+
+    $default  reduce usando la regla 67 ($@33)
+
+    $@33  ir al estado 133
+
+
+estado 123
+
+   78 paramList: TYPE ID ',' paramList .
+
+    $default  reduce usando la regla 78 (paramList)
+
+
+estado 124
+
+   23 function: FUNCT TYPE ID '(' $@10 paramListContainer ')' '{' $@11 . statementBlockContainer '}' $@12
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    WHILE          desplazar e ir al estado 97
+    IF             desplazar e ir al estado 98
+    RETURN         desplazar e ir al estado 99
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    statementBlockContainer  ir al estado 134
+    statementBlock           ir al estado 101
+    statement                ir al estado 102
+    exp                      ir al estado 103
+    returnExp                ir al estado 104
+    assign                   ir al estado 31
+    num                      ir al estado 32
+
+
+estado 125
+
+   27 function: FUNCT TYPE '[' ']' ID '(' $@13 paramListContainer ')' . '{' $@14 statementBlockContainer '}' $@15
+
+    '{'  desplazar e ir al estado 135
+
+
+estado 126
+
+   17 statement: WHILE '(' $@7 . compare ')' '{' $@8 statementBlockContainer '}' $@9
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp      ir al estado 127
+    compare  ir al estado 136
+    assign   ir al estado 31
+    num      ir al estado 32
+
+
+estado 127
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   60 compare: exp . COMP $@29 exp
+
+    COMP  desplazar e ir al estado 137
+    '+'   desplazar e ir al estado 48
+    '-'   desplazar e ir al estado 49
+    '*'   desplazar e ir al estado 50
+    '/'   desplazar e ir al estado 51
+
+
+estado 128
+
+   12 statement: IF '(' compare . ')' '{' statementBlockContainer '}'
+   13          | IF '(' compare . ')' '{' statementBlockContainer '}' ELSE '{' statementBlockContainer '}'
+
+    ')'  desplazar e ir al estado 138
+
+
+estado 129
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   56 returnExp: RETURN $@27 exp .
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    $default  reduce usando la regla 56 (returnExp)
+
+
+estado 130
+
+    8 MainProgram: MAIN $@4 '{' $@5 statementBlockContainer '}' $@6 .
+
+    $default  reduce usando la regla 8 (MainProgram)
+
+
+estado 131
+
+   86 declaration: TYPE ID '[' $@37 ENTERO ']' '=' $@38 '{' $@39 numListContainer '}' . $@40
+
+    $default  reduce usando la regla 85 ($@40)
+
+    $@40  ir al estado 139
+
+
+estado 132
+
+   70 numList: num ',' . $@34 numList
+
+    $default  reduce usando la regla 69 ($@34)
+
+    $@34  ir al estado 140
+
+
+estado 133
+
+   68 numList: num $@33 .
+
+    $default  reduce usando la regla 68 (numList)
+
+
+estado 134
+
+   23 function: FUNCT TYPE ID '(' $@10 paramListContainer ')' '{' $@11 statementBlockContainer . '}' $@12
+
+    '}'  desplazar e ir al estado 141
+
+
+estado 135
+
+   27 function: FUNCT TYPE '[' ']' ID '(' $@13 paramListContainer ')' '{' . $@14 statementBlockContainer '}' $@15
+
+    $default  reduce usando la regla 25 ($@14)
+
+    $@14  ir al estado 142
+
+
+estado 136
+
+   17 statement: WHILE '(' $@7 compare . ')' '{' $@8 statementBlockContainer '}' $@9
+
+    ')'  desplazar e ir al estado 143
+
+
+estado 137
+
+   60 compare: exp COMP . $@29 exp
+
+    $default  reduce usando la regla 59 ($@29)
+
+    $@29  ir al estado 144
+
+
+estado 138
+
+   12 statement: IF '(' compare ')' . '{' statementBlockContainer '}'
+   13          | IF '(' compare ')' . '{' statementBlockContainer '}' ELSE '{' statementBlockContainer '}'
+
+    '{'  desplazar e ir al estado 145
+
+
+estado 139
+
+   86 declaration: TYPE ID '[' $@37 ENTERO ']' '=' $@38 '{' $@39 numListContainer '}' $@40 .
+
+    $default  reduce usando la regla 86 (declaration)
+
+
+estado 140
+
+   70 numList: num ',' $@34 . numList
+
+    ENTERO  desplazar e ir al estado 24
+    REAL    desplazar e ir al estado 25
+
+    numList  ir al estado 146
+    num      ir al estado 122
+
+
+estado 141
+
+   23 function: FUNCT TYPE ID '(' $@10 paramListContainer ')' '{' $@11 statementBlockContainer '}' . $@12
+
+    $default  reduce usando la regla 22 ($@12)
+
+    $@12  ir al estado 147
+
+
+estado 142
+
+   27 function: FUNCT TYPE '[' ']' ID '(' $@13 paramListContainer ')' '{' $@14 . statementBlockContainer '}' $@15
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    WHILE          desplazar e ir al estado 97
+    IF             desplazar e ir al estado 98
+    RETURN         desplazar e ir al estado 99
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    statementBlockContainer  ir al estado 148
+    statementBlock           ir al estado 101
+    statement                ir al estado 102
+    exp                      ir al estado 103
+    returnExp                ir al estado 104
+    assign                   ir al estado 31
+    num                      ir al estado 32
+
+
+estado 143
+
+   17 statement: WHILE '(' $@7 compare ')' . '{' $@8 statementBlockContainer '}' $@9
+
+    '{'  desplazar e ir al estado 149
+
+
+estado 144
+
+   60 compare: exp COMP $@29 . exp
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    exp     ir al estado 150
+    assign  ir al estado 31
+    num     ir al estado 32
+
+
+estado 145
+
+   12 statement: IF '(' compare ')' '{' . statementBlockContainer '}'
+   13          | IF '(' compare ')' '{' . statementBlockContainer '}' ELSE '{' statementBlockContainer '}'
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    WHILE          desplazar e ir al estado 97
+    IF             desplazar e ir al estado 98
+    RETURN         desplazar e ir al estado 99
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    statementBlockContainer  ir al estado 151
+    statementBlock           ir al estado 101
+    statement                ir al estado 102
+    exp                      ir al estado 103
+    returnExp                ir al estado 104
+    assign                   ir al estado 31
+    num                      ir al estado 32
+
+
+estado 146
+
+   70 numList: num ',' $@34 numList .
+
+    $default  reduce usando la regla 70 (numList)
+
+
+estado 147
+
+   23 function: FUNCT TYPE ID '(' $@10 paramListContainer ')' '{' $@11 statementBlockContainer '}' $@12 .
+
+    $default  reduce usando la regla 23 (function)
+
+
+estado 148
+
+   27 function: FUNCT TYPE '[' ']' ID '(' $@13 paramListContainer ')' '{' $@14 statementBlockContainer . '}' $@15
+
+    '}'  desplazar e ir al estado 152
+
+
+estado 149
+
+   17 statement: WHILE '(' $@7 compare ')' '{' . $@8 statementBlockContainer '}' $@9
+
+    $default  reduce usando la regla 15 ($@8)
+
+    $@8  ir al estado 153
+
+
+estado 150
+
+   34 exp: exp . '+' $@17 exp
+   36    | exp . '-' $@18 exp
+   38    | exp . '*' $@19 exp
+   40    | exp . '/' $@20 exp
+   60 compare: exp COMP $@29 exp .
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    $default  reduce usando la regla 60 (compare)
+
+
+estado 151
+
+   12 statement: IF '(' compare ')' '{' statementBlockContainer . '}'
+   13          | IF '(' compare ')' '{' statementBlockContainer . '}' ELSE '{' statementBlockContainer '}'
+
+    '}'  desplazar e ir al estado 154
+
+
+estado 152
+
+   27 function: FUNCT TYPE '[' ']' ID '(' $@13 paramListContainer ')' '{' $@14 statementBlockContainer '}' . $@15
+
+    $default  reduce usando la regla 26 ($@15)
+
+    $@15  ir al estado 155
+
+
+estado 153
+
+   17 statement: WHILE '(' $@7 compare ')' '{' $@8 . statementBlockContainer '}' $@9
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    WHILE          desplazar e ir al estado 97
+    IF             desplazar e ir al estado 98
+    RETURN         desplazar e ir al estado 99
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    statementBlockContainer  ir al estado 156
+    statementBlock           ir al estado 101
+    statement                ir al estado 102
+    exp                      ir al estado 103
+    returnExp                ir al estado 104
+    assign                   ir al estado 31
+    num                      ir al estado 32
+
+
+estado 154
+
+   12 statement: IF '(' compare ')' '{' statementBlockContainer '}' .
+   13          | IF '(' compare ')' '{' statementBlockContainer '}' . ELSE '{' statementBlockContainer '}'
+
+    ELSE  desplazar e ir al estado 157
+
+    $default  reduce usando la regla 12 (statement)
+
+
+estado 155
+
+   27 function: FUNCT TYPE '[' ']' ID '(' $@13 paramListContainer ')' '{' $@14 statementBlockContainer '}' $@15 .
+
+    $default  reduce usando la regla 27 (function)
+
+
+estado 156
+
+   17 statement: WHILE '(' $@7 compare ')' '{' $@8 statementBlockContainer . '}' $@9
+
+    '}'  desplazar e ir al estado 158
+
+
+estado 157
+
+   13 statement: IF '(' compare ')' '{' statementBlockContainer '}' ELSE . '{' statementBlockContainer '}'
+
+    '{'  desplazar e ir al estado 159
+
+
+estado 158
+
+   17 statement: WHILE '(' $@7 compare ')' '{' $@8 statementBlockContainer '}' . $@9
+
+    $default  reduce usando la regla 16 ($@9)
+
+    $@9  ir al estado 160
+
+
+estado 159
+
+   13 statement: IF '(' compare ')' '{' statementBlockContainer '}' ELSE '{' . statementBlockContainer '}'
+
+    ID             desplazar e ir al estado 23
+    ENTERO         desplazar e ir al estado 24
+    REAL           desplazar e ir al estado 25
+    STRINGLITERAL  desplazar e ir al estado 26
+    WHILE          desplazar e ir al estado 97
+    IF             desplazar e ir al estado 98
+    RETURN         desplazar e ir al estado 99
+    PRINT          desplazar e ir al estado 27
+    '-'            desplazar e ir al estado 28
+    '('            desplazar e ir al estado 29
+
+    statementBlockContainer  ir al estado 161
+    statementBlock           ir al estado 101
+    statement                ir al estado 102
+    exp                      ir al estado 103
+    returnExp                ir al estado 104
+    assign                   ir al estado 31
+    num                      ir al estado 32
+
+
+estado 160
+
+   17 statement: WHILE '(' $@7 compare ')' '{' $@8 statementBlockContainer '}' $@9 .
+
+    $default  reduce usando la regla 17 (statement)
+
+
+estado 161
+
+   13 statement: IF '(' compare ')' '{' statementBlockContainer '}' ELSE '{' statementBlockContainer . '}'
+
+    '}'  desplazar e ir al estado 162
+
+
+estado 162
+
+   13 statement: IF '(' compare ')' '{' statementBlockContainer '}' ELSE '{' statementBlockContainer '}' .
+
+    $default  reduce usando la regla 13 (statement)

@@ -42,6 +42,7 @@ struct ast * defsEval(struct listContainer *defs){
 					struct reg * pos2 = numListEval(((struct listContainer*)node->content)->list, symbol);
 				}else{
 					struct reg * pos = exprEval(node->content);
+					printf("Saliendo ExprEval\n");
 					symbol->varIndex = varIndex++;
 					reserveSpace(4);
 					registerToMemory('+', 7, 0, pos);
@@ -68,16 +69,18 @@ struct ast * funsEval(struct listContainer *funs){
 		struct funDef * fun = (struct funDef*)list->current;
 		struct symbol * symbol = fun->symbol;
 		
+
 		varIndex = 1;
 		fun->label = label1;
 		symbol->fun = fun;
 		paramsEval(((struct listContainer*)fun->params)->list, fun);
+		addSymbolTable(symbol);
 		statementBlockEval(fun->content);
 		list = list->next;
 		
-		addSymbolTable(symbol);
+		
 		freeRegisters();
-		extractContext();
+		goOutFunction();
 	}
 }
 
@@ -103,7 +106,7 @@ struct ast * statementBlockEval(struct listContainer *defs){
 			case 'e': 
 				freeRegisters();
 				returnEval((struct returnStatement*)list->current);
-				extractContext();
+				
 			break;
 			default: 
 			exprEval(list->current);
@@ -154,6 +157,7 @@ struct reg * exprEval(struct ast *defs){
 
 		case 'u': 
 			funCallEval((struct funCall*)defs);
+			extractContext();
 			return getRegister("R", 1);
 			break;
 		
@@ -171,6 +175,7 @@ struct reg * numEval(double num){
 	}else{
 		res = getRegister("R", -1);
 	}
+	
 	numToRegister(res,num);
 	return res;
 }
@@ -189,11 +194,14 @@ struct reg * refEval(char *id){
 		printf("Symbol shouldn't be NULL\n");
         exit(0);
 	}
+	printf("Name: %s, Type: %c", symbol->name, symbol->type);
 
-	if (strcmp(&symbol->type, "i")==0)
+	if (symbol->type == 'i')
 	{
+		printf("  R\n");
 		reg = getRegister("R", -1);
 	}else{
+		printf("  RR\n");
 		reg = getRegister("RR", -1);
 	}
 
@@ -254,7 +262,14 @@ struct reg * assignEval(struct assign * assign){
 		printf("Symbol shouldn't be NULL\n");
         exit(0);
 	}
-	registerToMemory('-', 6, symbol->varIndex, r1);
+	if (symbol->fun != NULL)
+	{
+		registerToMemory('-', 5, symbol->varIndex, r1);
+	}else{
+		registerToMemory('-', 6, symbol->varIndex, r1);
+	}
+	
+	
 	
 	return r1;
 }
@@ -330,7 +345,7 @@ struct reg * paramsEval(struct list * params, struct funDef * fun){
 			case 'i': 
 			case 'd': 
 				symbol->varIndex = varIndex++;
-				reserveSpace(4);
+				
 				break;
 			default: 
 				printf("internal error: bad node %c\n", symbol->type);
@@ -345,28 +360,33 @@ struct reg * funCallEval(struct funCall * funCall){
 	struct symbol * fun = searchSymbol(funCall->name);
 	struct list * params = ((struct list*)funCall->params);
 	struct reg *r1 = malloc(sizeof(struct reg));
+	struct reg *res = getRegister("R", 1);
 	int index = 1;
 	int label = getNextLabel();
+	printf("Espero que no pete aqui\n");
+
+	insertContext(label);
 
 	while (params!=NULL)
 	{
+		reserveSpace(4);
 		r1 = exprEval(params->current);
-        if (index == 1)
-        {
-           insertContext(label);
-        }
-		registerToMemory('-', 5, index++, r1);
+		registerToMemory('-', 4, index++, r1);
 		params  = params->next;
 		freeRegisters();
 	}
+	goInFunction();
 	insertGoTo(fun->fun->label);
 	insertLabel(label);
-	return r1;
+	printf("Espero que no pete aqui\n");
+	returnValueToRegister(res);
+	printf("Espero que no pete aqui\n");
+	return res;
 }
 
 void * returnEval(struct returnStatement * returnS){
-	struct reg * r = getRegister("R", 1);
-	registerToRegister(r, exprEval(returnS->ast));
+	registerToMemory('+', 5, 2, exprEval(returnS->ast));
+	goOutFunction();
 }
 
 void * numListEval(struct list * numList, struct symbol* array){
